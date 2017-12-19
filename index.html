@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>2D Planet</title>
+	</head>
+	<style>
+		body {
+			background-color : black;
+		}
+		canvas {
+			position : absolute;
+			top : 50%;
+			left : 50%;
+			transform : translate(-250px, -250px);
+			border : 2px solid black;
+		}
+		.fixed {
+			position : fixed;
+			top : 10px;
+			left : 10px;
+		}
+		label {
+			color : white;
+		}
+		
+		@media screen and (max-width: 500px) {
+			canvas {
+				position : absolute;
+				top : 5%;
+				left : 0;
+				transform : translate(0,0);
+				width: 100%;
+			}
+			.fixed {
+				top : initial;
+				bottom : 0;
+				left : 5px;
+			}
+			.fixed * {
+				display : block;
+			}
+		}
+	</style>
+	<body>
+		<canvas width="500" height="500"></canvas>
+		<div class="fixed">
+			<input type="button" value="Random" onclick="randomSeed()"></input>
+			<label>Seed : </label><input id="seed_field" type="text" value="" oninput="generate(true);"></input>
+			<label>Pixel size : </label><input id="pixelSize_field" type="number" min="1" max="15" value="5" oninput="generate(false);"></input>
+		</div>
+	</body>
+	<script type="text/javascript" src="PerlinNoise.js"></script>
+	<script type="text/javascript" src="index.js"></script>
+</html>
