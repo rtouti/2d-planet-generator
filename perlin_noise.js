@@ -16,7 +16,7 @@ function shuffle(array, seed){
 	}
 }
 
-PerlinNoise = function(seed){
+function PerlinNoise(seed){
 	this.seed = seed;
 	this.permutation = new Array(256);
 	this.p = new Array(512);

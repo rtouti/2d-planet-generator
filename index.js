@@ -2,6 +2,23 @@ var ctx = document.getElementsByTagName("canvas")[0].getContext("2d");
 var seedField = document.getElementById("seed_field");
 var pixelSizeField = document.getElementById("pixelSize_field");
 
+var mouseDown = false;
+var justReleasedMouse = false;
+var mousePos = {x: 0, y: 0};
+var mouseDiff = {x: 0, y: 0};
+window.addEventListener("mousedown", function(e){
+	mouseDown = true;
+});
+window.addEventListener("mouseup", function(e){
+	mouseDown = false;
+	justReleasedMouse = true;
+});
+window.addEventListener("mousemove", function(e){
+	mouseDiff.x = e.clientX-mousePos.x;
+	mouseDiff.y = e.clientY-mousePos.y;
+	mousePos.x = e.clientX;
+	mousePos.y = e.clientY;
+});
 
 
 function map(c, a1, a2, b1, b2){
@@ -92,6 +109,7 @@ var heightmap_height = 400;
 
 var dphi = 0.0;
 var planetRotationDiff;
+var rotationMomentum = 0.0;
 
 var radius = 100;
 var planetType;
@@ -278,7 +296,15 @@ function animate(texture_data, radius){
 	
 	ctx.putImageData(imageData, 0, 0);
 	
-	dphi -= planetRotationDiff;
+	dphi -= planetRotationDiff+rotationMomentum;
+	//rotationMomentum *= 0.90;
+	if(mouseDown){
+		dphi -= mouseDiff.x*0.005;
+	}
+	//if(justReleasedMouse){
+	//	rotationMomentum = mouseDiff.x > 0 ? 1 : -1;
+	//	justReleasedMouse = false;
+	//}
 	
 	window.requestAnimationFrame(function(){
 		animate(texture_data, radius);
@@ -307,11 +333,6 @@ function render_planet(canvas_data, texture_data, radius, w, h, x1, x2, angle1, 
 		}
 	}
 }
-
-
-
-
-
 
 
 
